@@ -31,7 +31,10 @@ services:
     build: ./services/AUTOMATIC1111
     image: sd-auto:72
     environment:
-      - CLI_ARGS=--allow-code --medvram --xformers --enable-insecure-extension-access --api
+      - CLI_ARGS=--allow-code --xformers --enable-insecure-extension-access --api --share --listen
+    networks:
+      my_macvlan_net:
+        ipv4_address: 10.10.10.55
 
   auto-cpu:
     <<: *automatic
@@ -71,3 +74,7 @@ services:
     deploy: {}
     environment:
       - CLI_ARGS=--cpu
+networks:
+  macvlan_docker:
+    external: true
+    name: macvlan_docker
